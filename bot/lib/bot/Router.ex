@@ -15,6 +15,19 @@ defmodule Bot.Router do
     end
   end
 
+  post "/webhook" do
+    {:ok, body, conn} = Plug.Conn.read_body(conn)
+
+    body
+    |> Posion.Parser.parse!(keys: :atoms)
+    |> Map.get(:entry)
+    |> hd
+    |> Map.get(:messaging)
+    |> Enum.each(&Bot.MessageHAndler.handle/1)
+
+    send_respo(conn, 200, "Processing message")
+  end
+
   match _ do
     send_resp(conn, 404, "404 - Page not found")
   end
