@@ -19,11 +19,11 @@ defmodule Bot.Router do
     {:ok, body, conn} = Plug.Conn.read_body(conn)
 
     body
-    |> Posion.Parser.parse!(keys: :atoms)
+    |> Poison.Parser.parse!(keys: :atoms)
     |> Map.get(:entry)
     |> hd
     |> Map.get(:messaging)
-    |> Enum.each(&Bot.MessageHAndler.handle/1)
+    |> Enum.each(&Bot.MessageHandler.handle/1)
 
     send_respo(conn, 200, "Processing message")
   end
