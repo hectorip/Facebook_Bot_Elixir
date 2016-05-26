@@ -30,7 +30,9 @@ defmodule Bot.Mixfile do
   defp deps do
     [
       {:cowboy, "~> 1.0"},
-      {:plug, "~> 1.0"}
+      {:plug, "~> 1.0"},
+      {:poison, "~> 2.1"},
+      {:httpoison, "~> 0.8.3"}
     ]
   end
 end

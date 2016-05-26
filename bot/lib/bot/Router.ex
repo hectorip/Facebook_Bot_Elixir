@@ -7,9 +7,9 @@ defmodule Bot.Router do
 
   get "/webhook" do
     conn = Plug.Conn.fetch_query_params(conn)
-
+    IO.inspect conn.params
     if conn.params["hub.verify_token"] == "secret-token" do
-      send_resp(conn, 200, conn.params["hub.challange"])
+      send_resp(conn, 200, conn.params["hub.challenge"])
     else
       send_resp(conn, 401, "Error, wrong validation token")
     end
