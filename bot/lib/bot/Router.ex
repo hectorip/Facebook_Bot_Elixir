@@ -21,7 +21,7 @@ defmodule Bot.Router do
     body
     |> Poison.Parser.parse!(keys: :atoms)
     |> Map.get(:entry)
-    |> hd
+    |> hd  # Getting the head of the list, raise error in case of empty list.
     |> Map.get(:messaging)
     |> Enum.each(&Bot.MessageHandler.handle/1)
 
