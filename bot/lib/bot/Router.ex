@@ -8,7 +8,7 @@ defmodule Bot.Router do
   get "/webhook" do
     conn = Plug.Conn.fetch_query_params(conn)
     IO.inspect conn.params
-    if conn.params["hub.verify_token"] == "secret-token" do
+    if conn.params["hub.verify_token"] == "this_is_an_awesome_token" do
       send_resp(conn, 200, conn.params["hub.challenge"])
     else
       send_resp(conn, 401, "Error, wrong validation token")
@@ -17,7 +17,7 @@ defmodule Bot.Router do
 
   post "/webhook" do
     {:ok, body, conn} = Plug.Conn.read_body(conn)
-
+    IO.inspect body
     body
     |> Poison.Parser.parse!(keys: :atoms)
     |> Map.get(:entry)
@@ -25,7 +25,7 @@ defmodule Bot.Router do
     |> Map.get(:messaging)
     |> Enum.each(&Bot.MessageHandler.handle/1)
 
-    send_respo(conn, 200, "Processing message")
+    send_resp(conn, 200, "Processing message")
   end
 
   match _ do

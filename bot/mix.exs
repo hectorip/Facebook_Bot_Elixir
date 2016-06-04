@@ -14,7 +14,7 @@ defmodule Bot.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger],
+    [applications: [:logger, :hackney, :httpoison],
      mod: {Bot, []}]
   end
 

@@ -8,7 +8,7 @@ defmodule Bot.MessageHandler do
       %{type: "web_url", title: "hectoripm.com", url: "http://hectoripm.com"},
       %{type: "postback", title: "Héctor Iván Patricio Moreno", payload: "PB_NAME"}
     ]
-
+    IO.inspect msg
     send_button_message msg.sender.id, "Escoge una de las siguientes opciones", buttons
   end
 
@@ -23,16 +23,23 @@ defmodule Bot.MessageHandler do
         attachment: %{
           type: "template",
           payload: %{
-            teamplate_type: "button",
-            text: text,
+            template_type: "button",
+            text: message,
             buttons: buttons
           }
         }
       }
     }
 
+    #payload = %{
+      #  message: %{
+        #   text: "Hola animalito"
+        # },
+      #recipient: %{id: recipient}
+      # }
+    IO.inspect payload
     url = "https://graph.facebook.com/v2.6/me/messages?access_token=#{@fb_page_access_token}"
-    headers = [["Content-type", "application/json"]]
-    HTTPoison.post! url, Poison.encode!(payload), headers
+    headers = [{"Content-type", "application/json"}]
+    IO.inspect(HTTPoison.post! url, Poison.encode!(payload), headers)
   end
 end
