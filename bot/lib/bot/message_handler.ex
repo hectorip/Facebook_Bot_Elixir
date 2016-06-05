@@ -31,13 +31,6 @@ defmodule Bot.MessageHandler do
       }
     }
 
-    #payload = %{
-      #  message: %{
-        #   text: "Hola animalito"
-        # },
-      #recipient: %{id: recipient}
-      # }
-    IO.inspect payload
     url = "https://graph.facebook.com/v2.6/me/messages?access_token=#{@fb_page_access_token}"
     headers = [{"Content-type", "application/json"}]
     IO.inspect(HTTPoison.post! url, Poison.encode!(payload), headers)

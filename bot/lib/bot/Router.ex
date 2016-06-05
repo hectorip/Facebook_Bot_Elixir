@@ -7,7 +7,6 @@ defmodule Bot.Router do
 
   get "/webhook" do
     conn = Plug.Conn.fetch_query_params(conn)
-    IO.inspect conn.params
     if conn.params["hub.verify_token"] == "this_is_an_awesome_token" do
       send_resp(conn, 200, conn.params["hub.challenge"])
     else
@@ -17,7 +16,6 @@ defmodule Bot.Router do
 
   post "/webhook" do
     {:ok, body, conn} = Plug.Conn.read_body(conn)
-    IO.inspect body
     body
     |> Poison.Parser.parse!(keys: :atoms)
     |> Map.get(:entry)
